@@ -5,4 +5,6 @@ to install this follow this step:
 1-  `git clone git@github.com:Mendrika160/stock-bda.git`  
 2-  `cd front-end`  
 3-  `yarn add`  
-4-  `yarn start`
+4-  `yarn start`  
+
+### Open [http://localhost:3000](http://localhost:3000) to view it in your browser. 
