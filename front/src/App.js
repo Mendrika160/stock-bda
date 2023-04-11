@@ -3,8 +3,12 @@ import './App.css';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from './components/auth/Login'
 import Product from './components/stock/Product';
-import { useEffect,useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Stock from './components/stock/Stock';
+import Navbar from './components/sidebar/Navbar';
+import  Vente  from './components/vente/Vente';
+import Fournisseur from './components/fournisseur/Fournisseur';
 
 function App() {
   const [user,setUser] = useState(null);
@@ -24,16 +28,21 @@ function App() {
 
   return (
     <>
-    <BrowserRouter>
+    <div className='App'>
+      
+          <BrowserRouter>
     
     
-     <Routes>
+        <Routes>
             <Route path="/auth/login" element={<Login />}></Route>
-            <Route path="/stock/product" element={<Product />}></Route>
-           
+            <Route path='/stock/fournisseur' element={<Fournisseur />}></Route>
+            <Route  path='/stock/vente' element={<Vente/>}></Route>
+            <Route path="/stock" exact element={<Stock />}></Route>
+            <Route path="/stock/product" exact element={<Product />}></Route>
           </Routes>
 
           </BrowserRouter>
+    </div>
     </>
   );
 }

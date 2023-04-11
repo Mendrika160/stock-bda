@@ -27,7 +27,7 @@ export default function Login() {
 
     const handleSubmit = async (values,{setErrors}) => {
         alert(JSON.stringify(values));
-        navigate('/stock/product')
+        navigate('/stock')
 
     }
 
