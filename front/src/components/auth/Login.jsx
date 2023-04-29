@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 export default function Login() {
@@ -26,8 +27,16 @@ export default function Login() {
     }
 
     const handleSubmit = async (values,{setErrors}) => {
-        alert(JSON.stringify(values));
-        navigate('/stock')
+        axios.post('http://localhost:5000/api/user/login',values)
+            .then(res => {
+                console.log('res :',res)
+                navigate('/stock')
+
+            })
+            .catch(err => {
+                console.log("error :",err.response.data)
+            })
+        //navigate('/stock')
 
     }
 

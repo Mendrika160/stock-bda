@@ -1,7 +1,8 @@
-const db = require("../models/index");
+const {User} = require("../models/index");
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
+const user = require("../models/user");
 
 
 module.exports = {
@@ -37,7 +38,7 @@ module.exports = {
             bcrypt.hash(password,salt,(errorHash,hash) =>{
                 if(errorHash) throw errorHash;
                 console.log("hash",hash)
-                db.User.create({
+                User.create({
                     name: name,
                     email: email,
                     password: hash,
@@ -61,49 +62,38 @@ module.exports = {
     }
 
     },
-    // loginUser: (req, res) => {
-    //     let { email, password } = req.body;
-    //     let errors = [];
+    async loginUser (req, res){
+        let { email, password } = req.body;
 
-    //     if (!email || !password) {
-    //         errors.push({ msg: "veuillez remplir tous les champs" })
-    //     }
-    //     if (errors.length > 0) {
-    //         res.render('user/login', {
-    //             errors
-    //         })
-    //     } else {
+        console.log("body log :" , req.body)
+        User.findOne({
+            where: { email: email } ,
+          })
+            .then(user => {
+                if(user){
+                    bcrypt.compare(password, user.password, (err, result) => {
+                        if( err) throw err;
+                        if (result){
+                            res.status(200).json({
+                                message : "log in successffuly"
+                            })
+                        }else{
+                            res.status(404).json({
+                                message : "password incorrect"
+                            })
+                        }
+                    })
+                }
+            })
+            .catch(err => {
+                res.status(500).json({
+                    message : err.message
+                })
+            })
+        
+        
 
-
-    //         db.User.findOne({
-    //             where: {
-    //                 email: email
-    //             }
-    //         }).then(user => {
-    //             if (!user) {
-    //                 errors.push({ msg: "email not found" });
-    //                 res.render('user/login', { errors });
-    //                 /* res.status(404).send({  
-    //                         message : " utilisateur introuvable"
-    //                     })
-    //                     */
-    //             } else {
-    //                 bcrypt.compare(password, user.password, (err, result) => {
-    //                     if (result == true) {
-    //                         const token = jwt.sign({ email: email }, 'secretkey');
-    //                         //res.json(token);
-    //                         res.redirect("/team")
-    //                     } else {
-    //                         errors.push({ msg: "password incorrect" });
-    //                         res.render('user/login', { errors });
-                    
-    //                     }
-    //                 });
-    //             }
-    //         });
-    //     }
-
-    // },
+    },
     // logoutUser: (req, res) => {
 
     //     req.logout();

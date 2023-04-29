@@ -6,12 +6,13 @@ const {
     addProduit
 } = require('../controllers/ProduitController');
 
-const {postUser} = require('../controllers/UserController');
+const {postUser,loginUser} = require('../controllers/UserController');
 
 
 // user
 
-router.post('/user/register',postUser)
+router.post('/user/register',postUser);
+router.post('/user/login',loginUser)
 
 // prodiuit 
 

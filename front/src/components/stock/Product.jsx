@@ -1,14 +1,18 @@
-import React from 'react'
+import React ,{useState}from 'react'
 import Navbar from '../sidebar/Navbar'
 import Stock from './Stock'
 import styled from 'styled-components'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
+import ModalForm from './ModalForm'
 
 
 function Product() {
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <>
     <Container>
@@ -18,13 +22,20 @@ function Product() {
      <div className="container product-container">
         <div className='mb-5'>product</div>
           {" "}
-          <div className="btn-add-product">
+          <div 
+            className="btn-add-product"
+            onClick={handleOpen}
+          >
              {/* <!-- Button trigger modal --> */}
             
                   <AddCircleIcon />
              
             
           </div>
+          <ModalForm
+            open={open}
+            handleClose={handleClose}
+           />
           <table className="table">
           <thead>
             <tr>
