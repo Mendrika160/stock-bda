@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from './components/auth/Login'
+import Register from './components/auth/Register'
 import Product from './components/stock/Product';
 import React, { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -35,10 +36,12 @@ function App() {
     
         <Routes>
             <Route path="/auth/login" element={<Login />}></Route>
+            <Route path="/auth/register" element={<Register />}></Route>
             <Route path='/stock/fournisseur' element={<Fournisseur />}></Route>
             <Route  path='/stock/vente' element={<Vente/>}></Route>
             <Route path="/stock" exact element={<Stock />}></Route>
             <Route path="/stock/product" exact element={<Product />}></Route>
+
           </Routes>
 
           </BrowserRouter>

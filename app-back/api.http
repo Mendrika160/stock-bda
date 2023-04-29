@@ -1,0 +1,50 @@
+GET http://localhost:5000/record
+
+####
+
+POST http://localhost:5000/api/register/client
+
+Content-Type: 'application/json'
+
+{
+    "username":"test",
+    "email":"test1234@gmail.com",
+    "phoneNumber":"+22345667777",
+    "password":"test1234",
+}
+
+
+###
+GET http://localhost:5000/api/room
+
+###
+GET http://localhost:5000/api/room/63d6470ad33976b65e8fdef7
+
+###
+GET http://localhost:5000/api/produits
+
+####
+
+POST http://localhost:5000/api/produit/add
+
+Content-Type: 'application/json'
+
+{
+    "design":"test",
+    "stock":"test1234@gmail.com",
+    "userId":"+22345667777",
+
+}
+
+###
+
+POST http://localhost:5000/api/user/register
+
+Content-Type: 'application/json'
+
+{
+    "name":"test",
+    "email":"test1234@gmail.com",
+    "password":"test1234",
+    "confrimPassword":"test1234",
+}

@@ -31,9 +31,6 @@ function Sidebar({Children}) {
                 ref={lisActiveRef}
                 onClick={(event) => handleClicklist(index,event)}
                 >
-                
-
-                
                 <span className='list-icon'>{value.icons}</span>
                 <span className='list-title'>{value.title}</span>
                 

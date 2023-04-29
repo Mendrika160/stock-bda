@@ -1,0 +1,25 @@
+<h1>Client User</h1>
+{{test}}
+ <table class="responsive-table highlight">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Last check out</th>   
+          </tr>
+        </thead>
+
+        <tbody>
+            
+                {{#each data}}
+            <tr>
+                <td>{{username}}</td>
+                <td>{{email}}</td>
+                <td>{{phoneNumber}}</td>
+                <td></td>
+            </tr>
+                {{/each}}
+  
+        </tbody>
+      </table>
