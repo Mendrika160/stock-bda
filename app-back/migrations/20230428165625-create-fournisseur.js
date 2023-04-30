@@ -38,10 +38,7 @@ module.exports = {
         },
         
       },
-      deletedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
+     
       userId:{
         allowNull: false,
         type : Sequelize.INTEGER,

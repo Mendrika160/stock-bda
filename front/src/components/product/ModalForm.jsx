@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import {Typography,Modal,Box} from '@mui/material'
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -13,19 +13,39 @@ const style = {
   p: 4,
 };
 
-function ModalForm({open,handleClose}) {
+function ModalForm({open,handleClose,productId}) {
 
   const schema = Yup.object().shape({
     design: Yup.string()
-        .required("Email is a required field")
-        .email("Invalid email format"),
+        .required("Designation is a required field"),
     stock: Yup.string()
         .required("Password is a required field")
         
   });
 
-  const handleSubmit = async (values,{setErrors}) => {
+  // get productid from db 
+  useEffect(() => {
+    console.log("prod id", productId)
+    
+  }, [productId]);
 
+
+  const handleSubmit = async (values,{setErrors}) => {
+    if(productId){
+        editProduct()
+    }else{
+        addProduct()
+    }
+
+  }
+
+  const editProduct = () => {
+    console.log("edit product m")
+
+  }
+
+  const addProduct = () => {
+    console.log("add product m")
   }
   return (
     <>
@@ -38,7 +58,7 @@ function ModalForm({open,handleClose}) {
         <Box sx={style}>
         <Formik 
             validationSchema={schema}
-            initialValues={{ design: "", stock: "" }}
+            initialValues={{ design: productId ? "kaka" : "", stock: productId ? "2" :"" }}
             onSubmit={(values,{setErrors}) => handleSubmit(values,{setErrors})}
                             
                             
@@ -109,7 +129,7 @@ function ModalForm({open,handleClose}) {
                                         type='submit'
                                         className='btn btn-info col-12'
                                     >
-                                        Add
+                                       {productId ? 'Edit product ' : 'Add product'}
                                     </button>
                                 </div>
 

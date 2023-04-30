@@ -44,20 +44,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-     
-      deletedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      deletedBy:{
-        allowNull: false,
-        type : Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        
-      },
+    
     });
   },
   async down(queryInterface, Sequelize) {

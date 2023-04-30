@@ -1,6 +1,5 @@
 import React ,{useState}from 'react'
 import Navbar from '../sidebar/Navbar'
-import Stock from './Stock'
 import styled from 'styled-components'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,10 +8,45 @@ import ModalForm from './ModalForm'
 
 
 function Product() {
-
+  const products = [
+    {
+      id: 1,
+      design : "marteau",
+      stock : "1"
+      
+    },
+    {
+      id: 2,
+      design : "clou",
+      stock : "23"
+      
+    }
+  ]
   const [open, setOpen] = useState(false);
+  const [productId,setProductId] = useState(null)
+
+  // useEffect(() => {
+   
+   
+  // }, [productId]);
+
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () =>{ 
+    setProductId(null);
+    setOpen(false)
+
+  };
+
+  const editProduct = (id) => {
+    handleOpen();
+    setProductId(id);
+    console.log("edit id",id)
+  }
+
+
+  const deleteProduct = (id) => {
+    console.log('product',id)
+  }
   return (
     <>
     <Container>
@@ -35,53 +69,44 @@ function Product() {
           <ModalForm
             open={open}
             handleClose={handleClose}
+            productId={productId}
            />
           <table className="table">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th scope="col">Designation</th>
+              <th scope="col">Stock</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>
-                <div className="btn-action">
-                  <EditIcon className="btn-action-edit"/>
-                  <DeleteForeverIcon className="btn-action-delete"/>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>
-                <div className="btn-action">
-                  <EditIcon className="btn-action-edit"/>
-                  <DeleteForeverIcon className="btn-action-delete"/>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colSpan="2">Larry the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <div className="btn-action">
-                  <EditIcon className="btn-action-edit"/>
-                  <DeleteForeverIcon className="btn-action-delete"/>
-                </div>
-              </td>
-            </tr>
+            {
+              products.map(product => (
+                <tr key={product.id}>
+                  <th scope="row">{product.id}</th>
+                  <td>{product.design}</td>
+                  <td>{product.stock}</td>
+                  
+                  <td>
+                    <div className="btn-action">
+                      <EditIcon 
+                        className="btn-action-edit"
+                        onClick={() =>editProduct(product.id)}
+                        />
+                      <DeleteForeverIcon 
+                        className="btn-action-delete"
+                        onClick={()=> deleteProduct(product.id)}
+                        />
+                    </div>
+                  </td>
+                </tr>
+
+              ))
+            
+            
+            }
+           
           </tbody>
         </table>
       </div> 

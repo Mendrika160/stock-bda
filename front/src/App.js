@@ -3,7 +3,7 @@ import './App.css';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
-import Product from './components/stock/Product';
+import Product from './components/product/Product';
 import React, { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Stock from './components/stock/Stock';
