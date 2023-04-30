@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   Approvisionnement.init({
     fournisseurId: DataTypes.INTEGER,
     produitId: DataTypes.INTEGER,
-    qteEntree: DataTypes.INTEGER
+    qteEntree: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Approvisionnement',
