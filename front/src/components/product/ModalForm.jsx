@@ -1,5 +1,6 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import {Typography,Modal,Box} from '@mui/material'
+import axios from 'axios';
 import { Formik } from "formik";
 import * as Yup from "yup";
 const style = {
@@ -14,7 +15,14 @@ const style = {
 };
 
 function ModalForm({open,handleClose,productId}) {
+  const [produit,setProduit] = useState({  
+    design: "",
+    stock: null,
+    userId : null
+  })
 
+
+  const userId = localStorage.getItem("stock-admin")
   const schema = Yup.object().shape({
     design: Yup.string()
         .required("Designation is a required field"),
@@ -26,26 +34,68 @@ function ModalForm({open,handleClose,productId}) {
   // get productid from db 
   useEffect(() => {
     console.log("prod id", productId)
+    if(productId){
+     findOneProduit(productId)
+    }
     
-  }, [productId]);
+  }, [productId,setProduit]);
 
 
+  useEffect(() => {
+    console.log("produit state",produit)
+  },[produit])
+
+
+  const findOneProduit = (id) => {
+    axios.get(`http://localhost:5000/api/produit/${id}`)
+      .then(({data}) => {
+          console.log("data",data.data)
+          setProduit({
+            design : data.data.design,
+            stock: data.data.stock,
+            userId: data.data.userId
+          })
+        
+          
+          
+      })
+      .catch(err => {
+        console.log("Err", err.response);
+      })
+
+  }
   const handleSubmit = async (values,{setErrors}) => {
     if(productId){
-        editProduct()
+        editProduct(values)
     }else{
-        addProduct()
+        addProduct(values)
     }
 
   }
 
-  const editProduct = () => {
-    console.log("edit product m")
+  const editProduct = (data) => {
+    console.log("edit product m",data)
 
   }
 
-  const addProduct = () => {
-    console.log("add product m")
+  const addProduct = (data) => {
+    if(userId){
+      const newData = { 
+        design : data.design,
+        stock : data.stock,
+        userId : parseInt(userId)
+      }
+      axios.post('http://localhost:5000/api/produit/add',newData)
+        .then(res => {
+          // console.log("res",res)
+          handleClose();
+        })
+        .catch(err => {
+          console.log("err", err.response);
+        })
+    console.log("add product m",data)
+  }
+    // handleClose();
   }
   return (
     <>
@@ -58,7 +108,7 @@ function ModalForm({open,handleClose,productId}) {
         <Box sx={style}>
         <Formik 
             validationSchema={schema}
-            initialValues={{ design: productId ? "kaka" : "", stock: productId ? "2" :"" }}
+            initialValues={{ design: produit.design ? produit.design: "", stock: produit.stock ? produit.stock :"" }}
             onSubmit={(values,{setErrors}) => handleSubmit(values,{setErrors})}
                             
                             
@@ -98,7 +148,7 @@ function ModalForm({open,handleClose,productId}) {
                                     </div>
                                 </div>
 
-                                {/* password */}
+                                {/* stock */}
                                 <div className="input-group flex-nowrap mb-3">
                                    <div className="input-container">
                                         <input 

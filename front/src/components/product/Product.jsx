@@ -1,34 +1,29 @@
-import React ,{useState}from 'react'
+import React ,{useState,useEffect}from 'react'
 import Navbar from '../sidebar/Navbar'
 import styled from 'styled-components'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ModalForm from './ModalForm'
-
+import axios from 'axios';
 
 function Product() {
-  const products = [
-    {
-      id: 1,
-      design : "marteau",
-      stock : "1"
-      
-    },
-    {
-      id: 2,
-      design : "clou",
-      stock : "23"
-      
-    }
-  ]
+
   const [open, setOpen] = useState(false);
   const [productId,setProductId] = useState(null)
+  const [products,setProducts ] = useState(null)
 
-  // useEffect(() => {
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/produits')
+      .then(({data}) => {
+        setProducts(data)
+      })
+      .catch(err => {
+        console.log("err",err);
+      })
    
-   
-  // }, [productId]);
+   console.log("ittt")
+  }, [open]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () =>{ 
@@ -82,7 +77,7 @@ function Product() {
           </thead>
           <tbody>
             {
-              products.map(product => (
+              products &&  products.map(product => (
                 <tr key={product.id}>
                   <th scope="row">{product.id}</th>
                   <td>{product.design}</td>
