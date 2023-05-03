@@ -6,12 +6,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ModalForm from './ModalForm'
 import axios from 'axios';
+import Popup from './Popup';
 
 function Product() {
 
   const [open, setOpen] = useState(false);
   const [productId,setProductId] = useState(null)
   const [products,setProducts ] = useState(null)
+  const [isDeleted,setIsDeleted] = useState(false)
+  const [produit,setProduit] = useState({  
+    design: "",
+    stock: null,
+    userId : null
+  })
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/produits')
@@ -23,24 +30,54 @@ function Product() {
       })
    
    console.log("ittt")
-  }, [open]);
+  }, [open,isDeleted]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () =>{ 
     setProductId(null);
+    setProduit({  
+      design: "",
+      stock: "",
+      userId : ""
+    })
     setOpen(false)
 
   };
 
-  const editProduct = (id) => {
-    handleOpen();
+  const findOneProduit = (id) => {
+    axios.get(`http://localhost:5000/api/produit/${id}`)
+      .then(({data}) => {
+          console.log("data produit in produit components",data.data)
+          setProduit({
+            design : data.data.design,
+            stock: data.data.stock,
+            userId: data.data.userId
+          })
+        
+          
+          
+      })
+      .catch(err => {
+        console.log("Err", err.response);
+      })
+
+  }
+  const editProduct = async (id) => {
+     findOneProduit(id)
+    
     setProductId(id);
+    handleOpen();
     console.log("edit id",id)
   }
 
 
   const deleteProduct = (id) => {
-    console.log('product',id)
+    console.log('product delete',id)
+    axios.post(`http://localhost:5000/api/produit/delete/${id}`)
+      .then(res => {
+        console.log("delete product ",res)
+        setIsDeleted(prev => !prev)
+      })
   }
   return (
     <>
@@ -61,11 +98,29 @@ function Product() {
              
             
           </div>
+          
           <ModalForm
             open={open}
             handleClose={handleClose}
-            productId={productId}
+            productId=""
+            design=""
+            stock=""
+            userId=""
+
            />
+         {
+          produit.design !== "" &&
+       
+           <ModalForm
+            open={open}
+            handleClose={handleClose}
+            productId={productId}
+            design={produit.design}
+            stock={produit.stock}
+            userId={produit.userId}
+
+           />
+         }
           <table className="table">
           <thead>
             <tr>

@@ -73,47 +73,48 @@ module.exports = {
       
     },
 
-    // async editOneProduit(req,res){
-    //     const { id } = req.params;
+    async editOneProduit(req,res){
+        const { id } = req.params;
+        console.log("edit product body",req.body)
 
-    //     try{
-    //         const produit = await Produit.update(req.body,{where : { id: id}});
-    //         if(!produit){
-    //             return res.status(404).json({
-    //                     status: '404',
-    //                     data : 'produit n\' existe pas'
-    //                 })
-    //         }
-    //         return res.status(200).json({status : '200',data : `le produit numero ${id} a ete modifier avec succes`});
+        try{
+            const produit = await Produit.update(req.body,{where : { id: id}});
+            if(!produit){
+                return res.status(404).json({
+                        status: '404',
+                        data : 'produit n\' existe pas'
+                    })
+            }
+            return res.status(200).json({status : '200',data : `le produit numero ${id} a ete modifier avec succes`});
 
-    //     }catch(err){
-    //         return res.status(400).json({
-    //             status:'400', 
-    //             data : err.message
-    //         })
-    //     }
-    // },
+        }catch(err){
+            return res.status(400).json({
+                status:'400', 
+                data : err.message
+            })
+        }
+    },
 
-    // async deleteOneProduit(req,res){
-    //     const { id } = req.params;
-    //     try{
-    //         const produit = await Produit.destroy({where : { id : id}})
-    //         if(!produit){
-    //             return res.status(404).json({
-    //                 status: '404',
-    //                 data : 'produit que vous voulez effacer n\'existe pas'
-    //             })
-    //         }
-    //         return res.status(200).json({ status : '200',data : 'suppression de produit avec succes'})
+    async deleteProduit(req,res){
+        const { id } = req.params;
+        try{
+            const produit = await Produit.destroy({where : { id : id}})
+            if(!produit){
+                return res.status(404).json({
+                    status: '404',
+                    data : 'produit que vous voulez effacer n\'existe pas'
+                })
+            }
+            return res.status(200).json({ status : '200',data : 'suppression de produit avec succes'})
 
-    //     }catch(err){
-    //         return res.status(400).json({
-    //             status:'400', 
-    //             data : err.message
-    //         })
-    //     }
+        }catch(err){
+            return res.status(400).json({
+                status:'400', 
+                data : err.message
+            })
+        }
         
-    // },
+    },
 
     
     // async getAllBonProduit(req,res){
