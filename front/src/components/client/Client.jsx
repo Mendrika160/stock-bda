@@ -7,8 +7,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ModalForm from './ModalForm'
 
 
-export default function Fournisseur() {
-  const fournisseurs = [
+export default function Client() {
+  const clients = [
     {
       id: 1,
       nom : "Jean",
@@ -20,7 +20,7 @@ export default function Fournisseur() {
     }
   ]
   const [open, setOpen] = useState(false);
-  const [frsId,setFrsId] = useState(null)
+  const [clientId,setClientId] = useState(null)
 
   // useEffect(() => {
    
@@ -29,19 +29,19 @@ export default function Fournisseur() {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () =>{ 
-    setFrsId(null);
+    setClientId(null)
     setOpen(false)
 
   };
 
-  const editFournisseur = (id) => {
+  const editClient = (id) => {
     handleOpen();
-    setFrsId(id);
+    setClientId(id)
     console.log("edit id",id)
   }
 
 
-  const deleteFournisseur = (id) => {
+  const deleteClient = (id) => {
     console.log('product',id)
   }
   return (
@@ -51,7 +51,7 @@ export default function Fournisseur() {
         <Navbar />
       </div>
      <div className="container product-container">
-        <div className='mb-5'>Fournisseur</div>
+        <div className='mb-5'>Client</div>
           {" "}
           <div 
             className="btn-add-product"
@@ -66,7 +66,7 @@ export default function Fournisseur() {
           <ModalForm
             open={open}
             handleClose={handleClose}
-            frsId={frsId}
+            clientId={clientId}
            />
           <table className="table">
           <thead>
@@ -78,21 +78,20 @@ export default function Fournisseur() {
           </thead>
           <tbody>
             {
-              fournisseurs.map(fournisseur => (
-                <tr key={fournisseur.id}>
-                  <th scope="row">{fournisseur.id}</th>
-                  <td>{fournisseur.nom}</td>
-                  
+              clients.map(client => (
+                <tr key={client.id}>
+                  <th scope="row">{client.id}</th>
+                  <td>{client.nom}</td>
                   
                   <td>
                     <div className="btn-action">
                       <EditIcon 
                         className="btn-action-edit"
-                        onClick={() =>editFournisseur(fournisseur.id)}
+                        onClick={() =>editClient(client.id)}
                         />
                       <DeleteForeverIcon 
                         className="btn-action-delete"
-                        onClick={()=> deleteFournisseur(fournisseur.id)}
+                        onClick={()=> deleteClient(client.id)}
                         />
                     </div>
                   </td>

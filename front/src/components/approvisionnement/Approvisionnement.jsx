@@ -4,23 +4,23 @@ import styled from 'styled-components'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import ModalFormVente from './ModalFormVente'
+import ModalForm from './ModalForm'
 
 
-const Vente = () => {
+const Approvisionnement= () => {
 
-  const ventes = [
+  const approvisonnements = [
     {
       id: 1,
-      client: { id : 1,nom : "Lucie"},
+      frs: { id : 1,nom : "Lucie"},
       produit: { id: 2,designation : "clou", stock: 3},
-      qteSortie : 2
+      qteEntree : 2
     },
     {
       id: 2,
-      client: { id : 1,nom : "Luc"},
+      frs: { id : 1,nom : "Luc"},
       produit: { id: 1,designation : "marteau", stock: 3},
-      qteSortie : 3
+      qteEntree : 3
     }
   ]
 
@@ -62,7 +62,7 @@ const Vente = () => {
           <Navbar />
         </div>
         <div className="container product-container">
-        <div className='mb-5'>vente</div>
+        <div className='mb-5'>Approvisionnement</div>
           {" "}
           <div 
             className="btn-add-product"
@@ -75,10 +75,10 @@ const Vente = () => {
             
           </div>
           
-          <ModalFormVente
+          <ModalForm
             open={open}
             handleClose={handleClose}
-            ventId={venteId}
+            apprivionnemenId={venteId}
           />
             <table className="table">
                 <thead>
@@ -91,22 +91,22 @@ const Vente = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    { ventes.map((vente) => (
+                    { approvisonnements.map((a) => (
       
-                    <tr key={vente.id}>
-                      <th scope="row">{vente.id}</th>
-                      <td>{vente.client.nom}</td>
-                      <td>{vente.produit.designation}</td>
-                      <td>{vente.qteSortie}</td>
+                    <tr key={a.id}>
+                      <th scope="row">{a.id}</th>
+                      <td>{a.frs.nom}</td>
+                      <td>{a.produit.designation}</td>
+                      <td>{a.qteEntree}</td>
                       <td>
                         <div className="btn-action">
                           <EditIcon 
                             className="btn-action-edit"
-                            onClick={() =>editVente(vente.id)}
+                            onClick={() =>editVente(a.id)}
                             />
                           <DeleteForeverIcon 
                             className="btn-action-delete"
-                            onClick={()=> deleteVente(vente.id)}
+                            onClick={()=> deleteVente(a.id)}
                             />
 
                         </div>
@@ -123,7 +123,7 @@ const Vente = () => {
   )
 }
 
-export default Vente;
+export default Approvisionnement;
 
 const Container = styled.div`
   display:flex;

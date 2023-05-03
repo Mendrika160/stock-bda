@@ -1,51 +1,83 @@
-import React ,{useState}from 'react'
+import React ,{useState,useEffect}from 'react'
 import Navbar from '../sidebar/Navbar'
 import styled from 'styled-components'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ModalForm from './ModalForm'
-
+import axios from 'axios';
+import Popup from './Popup';
 
 function Product() {
-  const products = [
-    {
-      id: 1,
-      design : "marteau",
-      stock : "1"
-      
-    },
-    {
-      id: 2,
-      design : "clou",
-      stock : "23"
-      
-    }
-  ]
+
   const [open, setOpen] = useState(false);
   const [productId,setProductId] = useState(null)
+  const [products,setProducts ] = useState(null)
+  const [isDeleted,setIsDeleted] = useState(false)
+  const [produit,setProduit] = useState({  
+    design: "",
+    stock: null,
+    userId : null
+  })
 
-  // useEffect(() => {
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/produits')
+      .then(({data}) => {
+        setProducts(data)
+      })
+      .catch(err => {
+        console.log("err",err);
+      })
    
-   
-  // }, [productId]);
+   console.log("ittt")
+  }, [open,isDeleted]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () =>{ 
     setProductId(null);
+    setProduit({  
+      design: "",
+      stock: "",
+      userId : ""
+    })
     setOpen(false)
 
   };
 
-  const editProduct = (id) => {
-    handleOpen();
+  const findOneProduit = (id) => {
+    axios.get(`http://localhost:5000/api/produit/${id}`)
+      .then(({data}) => {
+          console.log("data produit in produit components",data.data)
+          setProduit({
+            design : data.data.design,
+            stock: data.data.stock,
+            userId: data.data.userId
+          })
+        
+          
+          
+      })
+      .catch(err => {
+        console.log("Err", err.response);
+      })
+
+  }
+  const editProduct = async (id) => {
+     findOneProduit(id)
+    
     setProductId(id);
+    handleOpen();
     console.log("edit id",id)
   }
 
 
   const deleteProduct = (id) => {
-    console.log('product',id)
+    console.log('product delete',id)
+    axios.post(`http://localhost:5000/api/produit/delete/${id}`)
+      .then(res => {
+        console.log("delete product ",res)
+        setIsDeleted(prev => !prev)
+      })
   }
   return (
     <>
@@ -66,11 +98,29 @@ function Product() {
              
             
           </div>
+          
           <ModalForm
             open={open}
             handleClose={handleClose}
-            productId={productId}
+            productId=""
+            design=""
+            stock=""
+            userId=""
+
            />
+         {
+          produit.design !== "" &&
+       
+           <ModalForm
+            open={open}
+            handleClose={handleClose}
+            productId={productId}
+            design={produit.design}
+            stock={produit.stock}
+            userId={produit.userId}
+
+           />
+         }
           <table className="table">
           <thead>
             <tr>
@@ -82,7 +132,7 @@ function Product() {
           </thead>
           <tbody>
             {
-              products.map(product => (
+              products &&  products.map(product => (
                 <tr key={product.id}>
                   <th scope="row">{product.id}</th>
                   <td>{product.design}</td>

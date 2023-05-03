@@ -75,7 +75,8 @@ module.exports = {
                         if( err) throw err;
                         if (result){
                             res.status(200).json({
-                                message : "log in successffuly"
+                                message : "log in successffuly",
+                                user: user.id
                             })
                         }else{
                             res.status(404).json({

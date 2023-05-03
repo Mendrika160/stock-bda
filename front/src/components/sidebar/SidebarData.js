@@ -16,5 +16,15 @@ export const SidebarData = [
          title: "Fournisseur",
          icons: <ContentPasteIcon />,
          link: "/stock/fournisseur"
+      },
+      {
+         title: "Client",
+         icons: <ContentPasteIcon />,
+         link: "/stock/client"
+      },
+      {
+         title: "Approvisionnement",
+         icons: <ContentPasteIcon />,
+         link: "/stock/approvisionnement"
       }
 ];

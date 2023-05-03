@@ -10,6 +10,8 @@ import Stock from './components/stock/Stock';
 import Navbar from './components/sidebar/Navbar';
 import  Vente  from './components/vente/Vente';
 import Fournisseur from './components/fournisseur/Fournisseur';
+import Client from './components/client/Client';
+import Approvisionnement from './components/approvisionnement/Approvisionnement';
 
 function App() {
   const [user,setUser] = useState(null);
@@ -41,6 +43,8 @@ function App() {
             <Route  path='/stock/vente' element={<Vente/>}></Route>
             <Route path="/stock" exact element={<Stock />}></Route>
             <Route path="/stock/product" exact element={<Product />}></Route>
+            <Route path="/stock/client" exact element={<Client />}></Route>
+            <Route path="/stock/approvisionnement" exact element={<Approvisionnement />}></Route>
 
           </Routes>
 

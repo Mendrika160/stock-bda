@@ -28,8 +28,9 @@ export default function Login() {
 
     const handleSubmit = async (values,{setErrors}) => {
         axios.post('http://localhost:5000/api/user/login',values)
-            .then(res => {
-                console.log('res :',res)
+            .then(({data}) => {
+                console.log('user res :',data)
+                localStorage.setItem("stock-admin",data.user)
                 navigate('/stock')
 
             })
